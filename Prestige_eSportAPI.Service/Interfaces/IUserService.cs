@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Prestige_eSports.Service.Interfaces
 {
@@ -9,6 +10,9 @@ namespace Prestige_eSports.Service.Interfaces
     {
         User ValidateUser(string username, string password);
         IEnumerable<User> Get();
-        int InsertNewUser(User user);
+        Task<User> GetById(int UserId);
+        Task<User> InsertNewUser(User user);
+        Task<User> DeleteUser(User user);
+        Task<User> UpdateUser(User user);
     }
 }

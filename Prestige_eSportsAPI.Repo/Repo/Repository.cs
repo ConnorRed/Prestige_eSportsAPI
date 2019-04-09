@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Prestige_eSports.Repo.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -29,13 +30,12 @@ namespace Prestige_eSports.Repo.Repositories
         /// </summary>
         /// <param name="entity"></param>
         /// <returns></returns>
-        public virtual async Task DeleteAysnc(TEntity entity)
+        public virtual async Task<TEntity> DeleteAysnc(TEntity entity)
         {
-            if (entity == null)
-                throw new ArgumentNullException("entity");
             _entities.Attach(entity);
             _entities.Remove(entity);
             await _context.SaveChangesAsync();
+            return entity;
         }
 
         private bool disposed = false;
@@ -102,10 +102,11 @@ namespace Prestige_eSports.Repo.Repositories
         /// </summary>
         /// <param name="entity"></param>
         /// <returns></returns>
-        public virtual async Task InsertAysnc(TEntity entity)
+        public virtual async Task<TEntity> InsertAysnc(TEntity entity)
         {
             _entities.Add(entity);
             await _context.SaveChangesAsync();
+            return entity;
         }
 
         /// <summary>
@@ -113,10 +114,11 @@ namespace Prestige_eSports.Repo.Repositories
         /// </summary>
         /// <param name="entity"></param>
         /// <returns></returns>
-        public virtual async Task UpdateAysnc(TEntity entity)
+        public virtual async Task<TEntity> UpdateAysnc(TEntity entity)
         {
-            _entities.Attach(entity);
+            _entities.Update(entity);
             await _context.SaveChangesAsync();
+            return entity;
         }
 
         public TEntity GetFirstOrDefault(Expression<Func<TEntity, bool>> filter = null, params Expression<Func<TEntity, object>>[] includes)
