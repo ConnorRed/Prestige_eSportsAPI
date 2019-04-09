@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="System.Net.Http" Version="4.3.4" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Prestige_eSportsAPI.Data\Prestige_eSportsAPI.Data.csproj" />
     <ProjectReference Include="..\Prestige_eSportsAPI.Repo\Prestige_eSportsAPI.Repo.csproj" />
   </ItemGroup>

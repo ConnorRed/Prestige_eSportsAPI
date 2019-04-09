@@ -16,9 +16,9 @@ namespace Prestige_eSports.Repo.UnitOfWork
         public Dictionary<Type, object> repositories = new Dictionary<Type, object>();
         private IDbContextTransaction _transaction;
 
-        public UnitOfWork()
+        public UnitOfWork(PrestigeContext context)
         {
-            _context = new PrestigeContext();
+            _context = context;
         }
 
         /// <summary>

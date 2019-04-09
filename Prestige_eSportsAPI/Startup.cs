@@ -11,7 +11,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Prestige_eSports.Core.Models;
 using Prestige_eSports.Repo.Context;
+using Prestige_eSports.Repo.UnitOfWork;
+using Prestige_eSports.Service.Interfaces;
+using Prestige_eSports.Service.Services;
 
 namespace Prestige_eSportsAPI
 {
@@ -28,7 +32,9 @@ namespace Prestige_eSportsAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-            services.AddDbContext<PrestigeContext>(options => options.UseSqlServer(Configuration.GetConnectionString("ConnectStr")));
+            services.AddDbContext<PrestigeContext>(options => options.UseSqlServer(Configuration["Connectionstring"]));
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
