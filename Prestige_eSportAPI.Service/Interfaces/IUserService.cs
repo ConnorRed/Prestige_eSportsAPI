@@ -8,7 +8,7 @@ namespace Prestige_eSports.Service.Interfaces
 {
     public interface IUserService
     {
-        User ValidateUser(string username, string password);
+        string ValidateUser(string username, string password);
         IEnumerable<User> Get();
         Task<User> GetById(int UserId);
         Task<User> InsertNewUser(User user);
