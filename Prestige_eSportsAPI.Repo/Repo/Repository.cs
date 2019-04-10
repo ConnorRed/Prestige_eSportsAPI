@@ -76,18 +76,10 @@ namespace Prestige_eSports.Repo.Repositories
         /// </summary>
         /// <param name="entity"></param>
         /// <returns></returns>
-        public virtual async Task< InsertAysnc(TEntity entity)
+        public virtual async Task InsertAysnc(TEntity entity)
         {
-            try
-            {
                 _entities.Add(entity);
-                return await _context.SaveChangesAsync();
-            }
-            catch (Exception e)
-            {
-
-                throw;
-            }
+                await _context.SaveChangesAsync();
         }
 
         /// <summary>
@@ -95,10 +87,10 @@ namespace Prestige_eSports.Repo.Repositories
         /// </summary>
         /// <param name="entity"></param>
         /// <returns></returns>
-        public virtual async Task<int> UpdateAysnc(TEntity entity)
+        public virtual async Task UpdateAysnc(TEntity entity)
         {
             _entities.Update(entity);
-            return await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
         }
 
         public TEntity GetFirstOrDefault(Expression<Func<TEntity, bool>> filter = null, params Expression<Func<TEntity, object>>[] includes)
