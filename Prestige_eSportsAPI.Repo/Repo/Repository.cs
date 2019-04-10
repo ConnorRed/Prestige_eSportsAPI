@@ -30,11 +30,12 @@ namespace Prestige_eSports.Repo.Repositories
         /// </summary>
         /// <param name="entity"></param>
         /// <returns></returns>
-        public virtual async Task DeleteAysnc(TEntity entity)
+        public virtual async Task<TEntity> DeleteAysnc(TEntity entity)
         {
                 _entities.Attach(entity);
                 _entities.Remove(entity);
                 await _context.SaveChangesAsync();
+            return entity;
         }
 
         /// <summary>
@@ -69,17 +70,18 @@ namespace Prestige_eSports.Repo.Repositories
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public virtual async Task<TEntity> GetById(object id) => _entities.Find(id);
+        public virtual async Task<TEntity> GetById(object id) => await _entities.FindAsync(id);
 
         /// <summary>
         /// inserts entity
         /// </summary>
         /// <param name="entity"></param>
         /// <returns></returns>
-        public virtual async Task InsertAysnc(TEntity entity)
+        public virtual async Task<TEntity> InsertAysnc(TEntity entity)
         {
                 _entities.Add(entity);
                 await _context.SaveChangesAsync();
+            return entity;
         }
 
         /// <summary>
@@ -87,10 +89,11 @@ namespace Prestige_eSports.Repo.Repositories
         /// </summary>
         /// <param name="entity"></param>
         /// <returns></returns>
-        public virtual async Task UpdateAysnc(TEntity entity)
+        public virtual async Task<TEntity> UpdateAysnc(TEntity entity)
         {
             _entities.Update(entity);
             await _context.SaveChangesAsync();
+            return entity;
         }
 
         public TEntity GetFirstOrDefault(Expression<Func<TEntity, bool>> filter = null, params Expression<Func<TEntity, object>>[] includes)
