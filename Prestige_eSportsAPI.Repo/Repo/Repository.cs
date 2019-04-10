@@ -10,7 +10,7 @@ using PrestigeContext = Prestige_eSports.Repo.Context.PrestigeContext;
 
 namespace Prestige_eSports.Repo.Repositories
 {
-    public class Repository<TEntity> : IDisposable, IRepository<TEntity> where TEntity : class
+    public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
     {
         private readonly PrestigeContext _context;
         private DbSet<TEntity> _entities;
@@ -30,36 +30,11 @@ namespace Prestige_eSports.Repo.Repositories
         /// </summary>
         /// <param name="entity"></param>
         /// <returns></returns>
-        public virtual async Task<int> DeleteAysnc(TEntity entity)
+        public virtual async Task DeleteAysnc(TEntity entity)
         {
                 _entities.Attach(entity);
                 _entities.Remove(entity);
-                return await _context.SaveChangesAsync();
-        }
-
-        private bool disposed = false;
-        /// <summary>
-        /// dispose of DbContext
-        /// </summary>
-        /// <param name="disposing"></param>
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!this.disposed)
-            {
-                if (disposing)
-                {
-                    _context.Dispose();
-                }
-            }
-        }
-
-        /// <summary>
-        /// dispose of DbContext
-        /// </summary>
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
+                await _context.SaveChangesAsync();
         }
 
         /// <summary>
@@ -101,10 +76,18 @@ namespace Prestige_eSports.Repo.Repositories
         /// </summary>
         /// <param name="entity"></param>
         /// <returns></returns>
-        public virtual async Task<int> InsertAysnc(TEntity entity)
+        public virtual async Task< InsertAysnc(TEntity entity)
         {
-            _entities.Add(entity);
-            return await _context.SaveChangesAsync();
+            try
+            {
+                _entities.Add(entity);
+                return await _context.SaveChangesAsync();
+            }
+            catch (Exception e)
+            {
+
+                throw;
+            }
         }
 
         /// <summary>

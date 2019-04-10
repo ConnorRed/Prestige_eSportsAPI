@@ -25,7 +25,16 @@ namespace Prestige_eSportsAPI.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<User>> Get()
         {
-           return CreatedAtAction("Get", _userService.Get().ToList());
+            return Ok(_userService.Get().ToList());
+        }
+
+        [HttpGet("{id}")]
+        public ActionResult<User> Get(int id)
+        {
+            var user = _userService.GetById(id);
+            if (user == null)
+                return NotFound();
+            return Ok(user);
         }
 
         [HttpPost]

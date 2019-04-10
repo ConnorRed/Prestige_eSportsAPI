@@ -16,8 +16,8 @@ namespace Prestige_eSports.Repo.Interfaces
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
             params Expression<Func<TEntity, object>>[] includes);
         TEntity GetFirstOrDefault(Expression<Func<TEntity, bool>> filter = null, params Expression<Func<TEntity, object>>[] includes);
-        Task<int> InsertAysnc(TEntity entity);
-        Task<int> UpdateAysnc(TEntity entity);
-        Task<int> DeleteAysnc(TEntity entity);
+        Task InsertAysnc(TEntity entity);
+        Task UpdateAysnc(TEntity entity);
+        Task DeleteAysnc(TEntity entity);
     }
 }
