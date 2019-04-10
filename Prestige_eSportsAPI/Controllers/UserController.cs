@@ -29,43 +29,30 @@ namespace Prestige_eSportsAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<User>> Insert([FromBody] User user)
+        public async Task<ActionResult> Insert([FromBody] User user)
         {
             if (user == null)
                 return BadRequest("User cannot be null");
-            var found = await _userService.GetById(user.UserId);
-
-            if (found != null)
-                return BadRequest("User already exists");
-
-            return CreatedAtAction("Insert", await _userService.InsertNewUser(user));
+            await _userService.InsertNewUser(user);
+            return Ok();
         }
 
         [HttpDelete]
-        public async Task<ActionResult<User>> Delete([FromBody] User user)
+        public async Task<ActionResult> Delete([FromBody] User user)
         {
             if (user == null)
                 return BadRequest("User cannot be null");
-            var found = await _userService.GetById(user.UserId);
-
-            if (found == null)
-                return NotFound();
-
-            return CreatedAtAction("Delete", await _userService.DeleteUser(user));
+            await _userService.DeleteUser(user);
+            return Ok();
         }
 
         [HttpPatch]
-        public async Task<ActionResult<User>> Update([FromBody] User user)
+        public async Task<ActionResult> Update([FromBody] User user)
         {
             if (user == null)
                 return BadRequest("User cannot be null");
-
-            var found = await _userService.GetById(user.UserId);
-
-            if (found == null)
-                return NotFound();
-
-            return CreatedAtAction("Update",await _userService.UpdateUser(user));
+            await _userService.UpdateUser(user);
+            return Ok();
         }
     }
 }

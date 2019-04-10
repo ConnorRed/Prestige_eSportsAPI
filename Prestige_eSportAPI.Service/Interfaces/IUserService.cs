@@ -11,8 +11,8 @@ namespace Prestige_eSports.Service.Interfaces
         User ValidateUser(string username, string password);
         IEnumerable<User> Get();
         Task<User> GetById(int UserId);
-        Task<User> InsertNewUser(User user);
-        Task<User> DeleteUser(User user);
-        Task<User> UpdateUser(User user);
+        Task InsertNewUser(User user);
+        Task DeleteUser(User user);
+        Task UpdateUser(User user);
     }
 }

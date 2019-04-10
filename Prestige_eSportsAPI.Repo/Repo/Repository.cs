@@ -30,12 +30,11 @@ namespace Prestige_eSports.Repo.Repositories
         /// </summary>
         /// <param name="entity"></param>
         /// <returns></returns>
-        public virtual async Task<TEntity> DeleteAysnc(TEntity entity)
+        public virtual async Task<int> DeleteAysnc(TEntity entity)
         {
-            _entities.Attach(entity);
-            _entities.Remove(entity);
-            await _context.SaveChangesAsync();
-            return entity;
+                _entities.Attach(entity);
+                _entities.Remove(entity);
+                return await _context.SaveChangesAsync();
         }
 
         private bool disposed = false;
@@ -95,18 +94,17 @@ namespace Prestige_eSports.Repo.Repositories
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public virtual async Task<TEntity> GetById(object id) => await _entities.FindAsync(id);
+        public virtual async Task<TEntity> GetById(object id) => _entities.Find(id);
 
         /// <summary>
         /// inserts entity
         /// </summary>
         /// <param name="entity"></param>
         /// <returns></returns>
-        public virtual async Task<TEntity> InsertAysnc(TEntity entity)
+        public virtual async Task<int> InsertAysnc(TEntity entity)
         {
             _entities.Add(entity);
-            await _context.SaveChangesAsync();
-            return entity;
+            return await _context.SaveChangesAsync();
         }
 
         /// <summary>
@@ -114,11 +112,10 @@ namespace Prestige_eSports.Repo.Repositories
         /// </summary>
         /// <param name="entity"></param>
         /// <returns></returns>
-        public virtual async Task<TEntity> UpdateAysnc(TEntity entity)
+        public virtual async Task<int> UpdateAysnc(TEntity entity)
         {
             _entities.Update(entity);
-            await _context.SaveChangesAsync();
-            return entity;
+            return await _context.SaveChangesAsync();
         }
 
         public TEntity GetFirstOrDefault(Expression<Func<TEntity, bool>> filter = null, params Expression<Func<TEntity, object>>[] includes)
