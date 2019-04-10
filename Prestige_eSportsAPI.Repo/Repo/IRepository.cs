@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -15,8 +16,8 @@ namespace Prestige_eSports.Repo.Interfaces
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
             params Expression<Func<TEntity, object>>[] includes);
         TEntity GetFirstOrDefault(Expression<Func<TEntity, bool>> filter = null, params Expression<Func<TEntity, object>>[] includes);
-        Task InsertAysnc(TEntity entity);
-        Task UpdateAysnc(TEntity entity);
-        Task DeleteAysnc(TEntity entity);
+        Task<TEntity> InsertAysnc(TEntity entity);
+        Task<TEntity> UpdateAysnc(TEntity entity);
+        Task<TEntity> DeleteAysnc(TEntity entity);
     }
 }

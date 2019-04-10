@@ -10,7 +10,7 @@ using PrestigeContext = Prestige_eSports.Repo.Context.PrestigeContext;
 
 namespace Prestige_eSports.Repo.UnitOfWork
 {
-    public class UnitOfWork : IUnitOfWork, IDisposable
+    public class UnitOfWork : IUnitOfWork
     {
         private readonly PrestigeContext _context;
         public Dictionary<Type, object> repositories = new Dictionary<Type, object>();
@@ -29,32 +29,6 @@ namespace Prestige_eSports.Repo.UnitOfWork
         {
             _transaction = _context.Database.BeginTransaction();
             return _transaction;
-        }
-        /// <summary>
-        /// IDisposable implementation
-        /// </summary>
-        private bool disposed = false;
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="disposing"></param>
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!this.disposed)
-            {
-                if (disposing)
-                {
-                    _context.Dispose();
-                }
-            }
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
         }
 
         /// <summary>

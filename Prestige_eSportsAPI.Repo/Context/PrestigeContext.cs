@@ -7,10 +7,6 @@ namespace Prestige_eSports.Repo.Context
 {
     public class PrestigeContext : DbContext
     {
-        public PrestigeContext()
-        {
-        }
-
         public PrestigeContext(DbContextOptions<PrestigeContext> options)
             : base(options)
         { }

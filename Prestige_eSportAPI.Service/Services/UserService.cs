@@ -3,7 +3,9 @@ using Prestige_eSports.Repo.UnitOfWork;
 using Prestige_eSports.Service.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Prestige_eSports.Service.Services
 {
@@ -16,24 +18,16 @@ namespace Prestige_eSports.Service.Services
             _unitOfWork = unitOfWork;
         }
 
+        public async Task<User> DeleteUser(User user) => await _unitOfWork.GenericRepository<User>().DeleteAysnc(user);
+
         public IEnumerable<User> Get() => _unitOfWork.GenericRepository<User>().Get();
 
-        public int InsertNewUser(User user)
-        {
-            using (var transaction = _unitOfWork.BeginTransaction())
-            {
-                try
-                {
-                    _unitOfWork.GenericRepository<User>().InsertAysnc(user);
-                    _unitOfWork.SaveChanges();
-                }
-                catch (Exception ex)
-                {
-                    transaction.Rollback();
-                }
-            }
-            return user.UserId;
-        }
+        public async Task<User> InsertNewUser(User user) =>
+             await _unitOfWork.GenericRepository<User>().InsertAysnc(user);
+
+        public async Task<User> UpdateUser(User user) => await _unitOfWork.GenericRepository<User>().UpdateAysnc(user);
+
+        public async Task<User> GetById(int UserId) => await _unitOfWork.GenericRepository<User>().GetById(UserId);
 
         public User ValidateUser(string username, string password) => _unitOfWork.GenericRepository<User>().GetFirstOrDefault(x => x.Email == username && x.Password == password);
     }
