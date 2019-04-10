@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Prestige_eSports.Core.Models;
 using Prestige_eSports.Service.Interfaces;
 using System;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace Prestige_eSportsAPI.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class UserController : ControllerBase
@@ -17,6 +19,16 @@ namespace Prestige_eSportsAPI.Controllers
         public UserController(IUserService userService)
         {
             _userService = userService;
+        }
+
+        [AllowAnonymous]
+        [HttpPost("authenticate")]
+        public ActionResult Authenticate([FromBody] User user)
+        {
+            var token = _userService.ValidateUser(user.Username, user.Password);
+            if (token == null)
+                return Unauthorized();
+            return Ok(token);
         }
 
         [HttpGet]
