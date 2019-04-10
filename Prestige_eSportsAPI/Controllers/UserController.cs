@@ -26,9 +26,9 @@ namespace Prestige_eSportsAPI.Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult<User> Get(int id)
+        public async Task<ActionResult<User>> Get(int id)
         {
-            var user = _userService.GetById(id);
+            var user = await _userService.GetById(id);
             if (user == null)
                 return NotFound();
             return Ok(user);
