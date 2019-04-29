@@ -2,7 +2,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Prestige_eSports.Core.Models;
 using Prestige_eSports.Service.Interfaces;
+using Prestige_eSports.Service.Services;
 using System;
+using System.Reflection;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -54,7 +56,7 @@ namespace Prestige_eSportsAPI.Controllers
                 if (user == null)
                     return BadRequest("User cannot be null");
                 var inserted = await _userService.InsertNewUser(user);
-                return CreatedAtRoute("api/user POST", new { id = user.UserId }, user);
+                return CreatedAtRoute($"{this.GetType().Name} - {MethodBase.GetCurrentMethod().Name}", new { id = user.UserId }, user);
             }
             catch (Exception e)
             {
@@ -69,6 +71,11 @@ namespace Prestige_eSportsAPI.Controllers
             {
                 if (user == null)
                     return BadRequest("User cannot be null");
+
+                var existingUser = _userService.GetFirstOrDefault(user.UserId);
+                if(existingUser == null)
+                    return BadRequest("This user does not exist");
+                    
                 var deleted = await _userService.DeleteUser(user); ;
                 return Ok(deleted);
             }
@@ -85,6 +92,11 @@ namespace Prestige_eSportsAPI.Controllers
             {
                 if (user == null)
                     return BadRequest("User cannot be null");
+
+                var existingUser = _userService.GetFirstOrDefault(user.UserId);
+                if(existingUser == null)
+                    return BadRequest("This user does not exist");
+                
                 var updated = await _userService.UpdateUser(user);
                 return Ok(updated);
             }

@@ -29,6 +29,8 @@ namespace Prestige_eSports.Service.Services
 
         public IEnumerable<User> Get() => _unitOfWork.GenericRepository<User>().Get();
 
+        public User GetFirstOrDefault(int id) => _unitOfWork.GenericRepository<User>().GetFirstOrDefault(x => x.UserId == id);
+
         public async Task<User> InsertNewUser(User user) =>
              await _unitOfWork.GenericRepository<User>().InsertAysnc(user);
 
