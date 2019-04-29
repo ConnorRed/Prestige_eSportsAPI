@@ -4,6 +4,7 @@ using Prestige_eSports.Core.Models;
 using Prestige_eSports.Service.Interfaces;
 using Prestige_eSports.Service.Services;
 using System;
+using System.Reflection;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -55,7 +56,7 @@ namespace Prestige_eSportsAPI.Controllers
                 if (user == null)
                     return BadRequest("User cannot be null");
                 var inserted = await _userService.InsertNewUser(user);
-                return CreatedAtRoute("api/user POST", new { id = user.UserId }, user);
+                return CreatedAtRoute($"{this.GetType().Name} - {MethodBase.GetCurrentMethod().Name}", new { id = user.UserId }, user);
             }
             catch (Exception e)
             {

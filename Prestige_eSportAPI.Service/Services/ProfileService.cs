@@ -5,6 +5,7 @@ using Prestige_eSports.Service.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Prestige_eSports.Service.Services
 {
@@ -17,27 +18,14 @@ namespace Prestige_eSports.Service.Services
             _unitOfWork = unitOfWork;
         }
 
-        public IEnumerable<Profile> Get(User user) => _unitOfWork.GenericRepository<Profile>().Get(x => x.User.UserId == user.UserId);
+        public async Task<Profile> DeleteProfile(Profile profile) => await _unitOfWork.GenericRepository<Profile>().DeleteAysnc(profile);
 
-        public int InsertNewProfile(Profile profile)
-        {
-            using (var transaction = _unitOfWork.BeginTransaction())
-            {
-                try
-                {
+        public Task<Profile> GetById(int ProfileId) => _unitOfWork.GenericRepository<Profile>().GetById(ProfileId);
 
-                    _unitOfWork.GenericRepository<Profile>().InsertAysnc(profile);
-                    _unitOfWork.SaveChanges();
-                    transaction.Commit();
-                }
-                catch (Exception e)
-                {
-                    transaction.Rollback();
-                }
+        public Profile GetFirstOrDefault(int id) => _unitOfWork.GenericRepository<Profile>().GetFirstOrDefault(x => x.ProfileId == id);
 
-                return profile.ProfileId;
-            }
+        public async Task<Profile> UpdateProfile(Profile profile) => await _unitOfWork.GenericRepository<Profile>().UpdateAysnc(profile);
 
-        }
+        public async Task<Profile> InsertNewProfile(Profile profile) => await _unitOfWork.GenericRepository<Profile>().InsertAysnc(profile);
     }
 }
