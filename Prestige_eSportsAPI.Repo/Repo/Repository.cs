@@ -50,7 +50,7 @@ namespace Prestige_eSports.Repo.Repositories
             IQueryable<TEntity> query = _entities;
             foreach (var include in includes)
                 query = query.Include(include);
-
+            
             if (filter != null)
                 query = query.Where(filter);
             if (orderBy != null)
@@ -101,7 +101,7 @@ namespace Prestige_eSports.Repo.Repositories
             IQueryable<TEntity> query = _entities;
             foreach (Expression<Func<TEntity, object>> include in includes)
                 query = query.Include(include);
-            return query.FirstOrDefault(filter);
+            return query.AsNoTracking().FirstOrDefault(filter);
         }
     }
 }

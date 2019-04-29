@@ -14,5 +14,6 @@ namespace Prestige_eSports.Service.Interfaces
         Task<User> InsertNewUser(User user);
         Task<User> DeleteUser(User user);
         Task<User> UpdateUser(User user);
+        User GetFirstOrDefault(int id);
     }
 }
